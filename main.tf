@@ -30,8 +30,8 @@ resource "azurerm_template_deployment" "sql-cluster" {
   }
 
   template_body = <<DEPLOY
-    "${data.template_file.init.rendered}"
-  DEPLOY
+    "${trimspace(data.template_file.init.rendered)}"
+DEPLOY
 
   deployment_mode = "Incremental"
 }
