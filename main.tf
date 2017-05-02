@@ -29,9 +29,7 @@ resource "azurerm_template_deployment" "sql-cluster" {
     workloadType="GENERAL"
   }
 
-  template_body = <<DEPLOY
-    "${trimspace(data.template_file.init.rendered)}"
-DEPLOY
+  template_body = "${data.template_file.init.rendered}"
 
   deployment_mode = "Incremental"
 }
