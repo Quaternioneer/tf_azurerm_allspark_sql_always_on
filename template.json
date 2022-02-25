@@ -106,13 +106,6 @@
             },
             "defaultValue": "Standard_DS1_v2"
         },
-        "domainName": {
-            "type": "string",
-            "metadata": {
-                "description": "The FQDN of the AD Domain created "
-            },
-            "defaultValue": "contoso.local"
-        },
         "sqlServerServiceAccountUserName": {
             "type": "string",
             "metadata": {
@@ -674,8 +667,6 @@
                     "adPDCNicName": {
                         "value": "[variables('adPDCNicName')]"
                     },
-                    "domainName": {
-                        "value": "[parameters('domainName')]"
                     },
                     "adPDCConfigurationFunction": {
                         "value": "[variables('configuration').adPDCConfigurationFunction]"
@@ -784,9 +775,6 @@
                     },
                     "adminPassword": {
                         "value": "[parameters('adminPassword')]"
-                    },
-                    "domainName": {
-                        "value": "[parameters('domainName')]"
                     },
                     "adBDCConfigurationFunction": {
                         "value": "[variables('configuration').adBDCConfigurationFunction]"
@@ -1000,9 +988,6 @@
                     "adminPassword": {
                         "value": "[parameters('adminPassword')]"
                     },
-                    "domainName": {
-                        "value": "[parameters('domainName')]"
-                    },
                     "sqlAOPrepareModulesURL": {
                         "value": "[variables('configuration').sqlAOPrepareModulesURL]"
                     },
@@ -1076,9 +1061,6 @@
                     },
                     "adminPassword": {
                         "value": "[parameters('adminPassword')]"
-                    },
-                    "domainName": {
-                        "value": "[parameters('domainName')]"
                     },
                     "sqlAOEPName": {
                         "value": "[variables('sqlAOEPName')]"

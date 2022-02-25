@@ -13,7 +13,6 @@ resource "azurerm_template_deployment" "sql-cluster" {
     adVMSize="Standard_D2_v2"
     sqlVMSize="Standard_DS3_v2"
     witnessVMSize="Standard_DS2_v2"
-    domainName="xm.int"
     sqlServerServiceAccountUserName="sqlservice"
     sqlServerServiceAccountPassword="sqlServerService123!"
     sqlStorageAccountName="atsrpwsao"
