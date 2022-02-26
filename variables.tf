@@ -1,6 +1,6 @@
 variable "allspark" {
   description = "allspark network and storage details"
-  type = "map"
+  type = map
 }
 
 variable "server_name" {
@@ -17,5 +17,5 @@ variable "admin_password" {
 
 variable "db_names" {
   description = "Server Admin Password"
-  type = "list"
+  type = list
 }
