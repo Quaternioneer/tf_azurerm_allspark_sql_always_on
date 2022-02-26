@@ -1,3 +1,208 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminUsername": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Administrator of the new VMs and Domain"
+            }
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "The password for the Administrator account of the new VMs and Domain"
+            }
+        },
+        "adVMSize": {
+            "type": "string",
+            "allowedValues": [
+                "Standard_D2_v2",
+                "Standard_D3_v2",
+                "Standard_D4_v2",
+                "Standard_D5_v2",
+                "Standard_D11_v2",
+                "Standard_D12_v2",
+                "Standard_D13_v2",
+                "Standard_D14_v2",
+                "Standard_D15_v2",
+                "Standard_D2",
+                "Standard_D3",
+                "Standard_D4",
+                "Standard_D11",
+                "Standard_D12",
+                "Standard_D13",
+                "Standard_D14",
+                "Standard_DS1",
+                "Standard_DS2",
+                "Standard_DS3",
+                "Standard_DS4",
+                "Standard_DS11",
+                "Standard_DS12",
+                "Standard_DS13",
+                "Standard_DS14",
+                "Standard_DS2_v2",
+                "Standard_DS3_v2",
+                "Standard_DS4_v2",
+                "Standard_DS5_v2",
+                "Standard_DS11_v2",
+                "Standard_DS12_v2",
+                "Standard_DS13_v2",
+                "Standard_DS14_v2",
+                "Standard_DS15_v2"
+            ],
+            "metadata": {
+                "description": "The size of the AD VMs Created"
+            },
+            "defaultValue": "Standard_D1"
+        },
+        "sqlVMSize": {
+            "type": "string",
+            "allowedValues": [
+                "Standard_DS2",
+                "Standard_DS3",
+                "Standard_DS4",
+                "Standard_DS11",
+                "Standard_DS12",
+                "Standard_DS13",
+                "Standard_DS14",
+                "Standard_DS2_v2",
+                "Standard_DS3_v2",
+                "Standard_DS4_v2",
+                "Standard_DS5_v2",
+                "Standard_DS11_v2",
+                "Standard_DS12_v2",
+                "Standard_DS13_v2",
+                "Standard_DS14_v2",
+                "Standard_DS15_v2"
+            ],
+            "metadata": {
+                "description": "The size of the SQL VMs Created"
+            },
+            "defaultValue": "Standard_DS4_v2"
+        },
+        "witnessVMSize": {
+            "type": "string",
+            "allowedValues": [
+                "Standard_DS2",
+                "Standard_DS3",
+                "Standard_DS4",
+                "Standard_DS11",
+                "Standard_DS12",
+                "Standard_DS13",
+                "Standard_DS14",
+                "Standard_DS2_v2",
+                "Standard_DS3_v2",
+                "Standard_DS4_v2",
+                "Standard_DS5_v2",
+                "Standard_DS11_v2",
+                "Standard_DS12_v2",
+                "Standard_DS13_v2",
+                "Standard_DS14_v2",
+                "Standard_DS15_v2"
+            ],
+            "metadata": {
+                "description": "The size of the Witness VM Created"
+            },
+            "defaultValue": "Standard_DS1_v2"
+        },
+        "domainName": {
+            "type": "string",
+            "metadata": {
+                "description": "The FQDN of the AD Domain created "
+            },
+            "defaultValue": "contoso.local"
+        },
+        "sqlServerServiceAccountUserName": {
+            "type": "string",
+            "metadata": {
+                "description": "The SQL Server Service Account name"
+            },
+            "defaultValue": "sqlservice"
+        },
+        "sqlServerServiceAccountPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "The SQL Server Service Account password"
+            }
+        },
+        "sqlStorageAccountName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of Sql Server Storage Account"
+            }
+        },
+        "sqlStorageAccountType": {
+            "type": "string",
+            "allowedValues": [
+                "Premium_LRS"
+            ],
+            "metadata": {
+                "description": "The type of the Sql Server Storage Account created"
+            },
+            "defaultValue": "Premium_LRS"
+        },
+        "virtualNetworkAddressRange": {
+            "type": "string",
+            "metadata": {
+                "description": "The address range of the new VNET in CIDR format"
+            },
+            "defaultValue": "10.0.0.0/16"
+        },
+        "staticSubnet": {
+            "type": "string",
+            "metadata": {
+                "description": "The address range of the subnet static IPs are allocated from in the new VNET"
+            },
+            "defaultValue": "10.0.0.0/24"
+        },
+        "sqlSubnet": {
+            "type": "string",
+            "metadata": {
+                "description": "The address range of the SQL subnet created in the new VNET"
+            },
+            "defaultValue": "10.0.1.0/26"
+        },
+        "adPDCNICIPAddress": {
+            "type": "string",
+            "metadata": {
+                "description": "The IP address of the new AD VM"
+            },
+            "defaultValue": "10.0.0.4"
+        },
+        "adBDCNICIPAddress": {
+            "type": "string",
+            "metadata": {
+                "description": "The IP address of the new backup AD VM"
+            },
+            "defaultValue": "10.0.0.5"
+        },
+        "sqlLBIPAddress": {
+            "type": "string",
+            "metadata": {
+                "description": "The IP address of the new SQL Server Internal Load Balancer"
+            },
+            "defaultValue": "10.0.1.9"
+        },
+        "deploymentPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "The DNS Prefix for the Public IP Address for the Always On Cluster"
+            },
+            "defaultValue": "aodns"
+        },
+        "virtualNetworkName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of virtual network to be created"
+            },
+            "defaultValue": "autohav2VNET"
+        },
+        "templatesBaseUrl": {
+            "type": "string",
+            "metadata": {
+                "description": "Linked Templates base url"
+            },
             "defaultValue": "http://sqlvmgroup.blob.core.windows.net/autoha09302016"
         },
         "scriptsBaseUrl": {
@@ -469,6 +674,8 @@
                     "adPDCNicName": {
                         "value": "[variables('adPDCNicName')]"
                     },
+                    "domainName": {
+                        "value": "[parameters('domainName')]"
                     },
                     "adPDCConfigurationFunction": {
                         "value": "[variables('configuration').adPDCConfigurationFunction]"
@@ -578,6 +785,9 @@
                     "adminPassword": {
                         "value": "[parameters('adminPassword')]"
                     },
+                    "domainName": {
+                        "value": "[parameters('domainName')]"
+                    },
                     "adBDCConfigurationFunction": {
                         "value": "[variables('configuration').adBDCConfigurationFunction]"
                     },
@@ -656,7 +866,7 @@
                         ]
                     },
                     "dnsServers": {
-[O                        "value": [
+                        "value": [
                             "[parameters('adPDCNICIPAddress')]",
                             "[parameters('adBDCNICIPAddress')]"
                         ]
@@ -790,6 +1000,9 @@
                     "adminPassword": {
                         "value": "[parameters('adminPassword')]"
                     },
+                    "domainName": {
+                        "value": "[parameters('domainName')]"
+                    },
                     "sqlAOPrepareModulesURL": {
                         "value": "[variables('configuration').sqlAOPrepareModulesURL]"
                     },
@@ -864,6 +1077,9 @@
                     "adminPassword": {
                         "value": "[parameters('adminPassword')]"
                     },
+                    "domainName": {
+                        "value": "[parameters('domainName')]"
+                    },
                     "sqlAOEPName": {
                         "value": "[variables('sqlAOEPName')]"
                     },
@@ -918,4 +1134,3 @@
     ],
     "outputs": {}
 }
-
